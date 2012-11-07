@@ -6,33 +6,28 @@ define([
   var SessionModel = Backbone.Model.extend({
     url: '/sessions',
     defaults: {
-      setUp: function () {
-      },
-      tearDown: function () {
-      }
+      setUp: function () {},
+      tearDown: function () {}
     },
     initialize: function (options) {
-      this.set({auth: false});
       var model = this;
-      var auth = this.get('auth');
+      model.set({user: false});
       options = _.extend({}, this.defaults, options);
       $.ajaxPrefilter(function (ajaxOptions) {
         var success = ajaxOptions.success;
         ajaxOptions.dataType = 'json';
 
         ajaxOptions.success = function (data) {
-          if (typeof data.auth !== 'undefined') {
-            if (data.auth === false) {
+          if (typeof data.user !== 'undefined') {
+            if (data.user !== false) {
+              model.set(data);
+              options.setUp(model);
+            } else {
               options.tearDown();
-              model.set({auth: false});
+              model.set({user: false});
               model.id = null;
               model.clear();
               $.ajaxSetup({});
-
-            } else if (data.auth === true && auth === false) {
-              model.set(data);
-              options.setUp(model);
-
             }
           }
 

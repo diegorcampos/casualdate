@@ -1,7 +1,5 @@
 var express = require('express');
-var routes = require('./routes');
 var http = require('http');
-var LocalStrategy = require('passport-local').Strategy;
 var passport = require('passport');
 var path = require('path');
 var Sequelize = require('sequelize');
@@ -11,33 +9,14 @@ var sequelize = new Sequelize('casualist', 'casualist', 'teap0tting', {
   dialect: 'sqlite',
   storage: 'database.sqlite'
 })
-var User = require('./models/user').User(sequelize);
 
-passport.use(new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password'
-  },
-  function(username, password, done) {
-    User.findOne({email: username, password: password}).exec(function(err, user) {
-      if (user) {
-        return done(null, user);
-      } else {
-        return done(null, false, { message: 'Error authenticating.' });
-      }
-    });
-  }
-));
-passport.serializeUser(function(user, done) {
-  done(null, user._id);
-});
-passport.deserializeUser(function(id, done) {
-  User.findById(id).populate("bookmarked_rooms").exec(function(err, user) {
-    return done(null, user);
-  });
-});
+var Casualist = {};
+Casualist.Models = {};
+Casualist.Models.User = require('./models/user').User(sequelize);
 
 var app = express();
-app.configure(function(){
+Casualist.app = app;
+app.configure(function() {
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
@@ -61,6 +40,8 @@ app.configure(function(){
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
+
+var routes = require('./routes')(Casualist);
 
 app.get('/', routes.root);
 app.get('/users', routes.users.list);
