@@ -1,14 +1,77 @@
+base = #141414
+primary = #770feb
+secondary = #3e18d4
+accent-1 = #ac0ee0
+accent-2 = #0f1eeb
+accent-3 = #0e54e0
+text = #888888
+
 body
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
   letter-spacing: 0;
   line-height: 1.5em;
-  background-color: #141414;
-  color: #888;
+  background-color: base
+  color: text
 
 a
-  color: #666;
+  color: text
   text-decoration: none;
   outline: none;
+
+.login-heart
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 103px;
+  height: 87px;
+  margin-left: -51px;
+  margin-top: -48px;
+  cursor pointer
+
+.login-container
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 230px;
+  height: 140px;
+  margin-left: -115px;
+  margin-top: -70px;
+  text-align: center;
+  display: none;
+
+.main
+  padding-top: 30px;
+
+  .content
+    padding 30px
+
+.sidebar
+  text-align: center;
+
+.navigation
+  border-bottom: 2px solid text
+
+  ul
+    list-style-type: none;
+    overflow: auto;
+    margin 0px
+    margin-left 30px
+
+    li
+      float: left;
+      margin-right: 10px;
+      border: 1px solid text
+      border-bottom: none;
+
+      a
+        display: block;
+        text-decoration: none;
+        padding: 10px 20px;
+
+    li.active
+      a
+        font-weight: bold
+        font-size 13px
 
 

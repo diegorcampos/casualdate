@@ -9,6 +9,8 @@ define([
     el: $('.content'),
     render: function () {
       this.$el.html(_.template(activityTemplate));
+      $('.navigation li').removeClass("active");
+      $('.navigation li.activity').addClass("active");
     },
   });
   return new activityView;

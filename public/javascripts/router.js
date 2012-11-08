@@ -31,8 +31,10 @@ define([
     },
     logout: function() {
       var that = this;
-      Session.logout(function() {
-        window.location = '#';
+      $('.main').fadeOut(200, function() {
+        Session.logout(function() {
+          window.location = '#';
+        });
       });
     },
     activity: function() {

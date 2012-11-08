@@ -10,6 +10,8 @@ define([
     el: $('.content'),
     render: function () {
       this.$el.html(_.template(profileTemplate));
+      $('.navigation li').removeClass("active");
+      $('.navigation li.profile').addClass("active");
     },
   });
   return new profileView;

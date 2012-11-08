@@ -13,19 +13,20 @@ define([
       this.$el.html(_.template(loginTemplate));
     },
     events: {
+      'click .login-heart': 'showLogin',
       'submit .login-form': 'login'
+    },
+    showLogin: function() {
+      $('.login-heart').fadeOut(200, function () {
+        $('.login-container').fadeIn(200);
+      });
     },
     login: function() {
       var that = this;
       var creds = $('.login-form').serializeObject();
-      console.log(creds);
       Session.login(creds, function (data) {
-        if (data.user) {
-          $('.login-form').fadeOut(200, function () {
-            Backbone.router.navigate('#/activity', {trigger: true});
-          });
-        } else {
-          $('.login-errors', that.el).hide().html(_.template(loginErrorsTemplate, {message: 'The email/password wasn\'t recognized'})).slideDown(200);
+        if (!data.user) {
+          $('.login-errors', that.el).hide().html(_.template(loginErrorsTemplate, {message: 'Incorrect username/password.'})).slideDown(200);
         }
       });
       return false;
