@@ -42,6 +42,13 @@ define([
         activityView.render();
       });
     },
+    profile: function() {
+      console.log("PROFILE");
+      Bus.trigger('setTitle', "Profile");
+      require(['views/profile'], function (profileView) {
+        profileView.render();
+      });
+    },
     default: function() {
       console.log("DEFAULT");
       if (Session.checkAuth()) {
@@ -55,6 +62,7 @@ define([
   var initialize = function(){
     var app_router = new AppRouter;
     Backbone.router = app_router;
+    Backbone.history.start();
   };
   Bus.on("setTitle", function (title) {
     $("title").html("Casualist - " + title);
