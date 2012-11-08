@@ -13,6 +13,7 @@ var sequelize = new Sequelize('casualist', 'casualist', 'teap0tting', {
 
 var Casualist = {};
 Casualist.Models = {};
+Casualist.Models.Image = require('./models/image').Image(sequelize);
 Casualist.Models.User = require('./models/user').User(sequelize);
 
 var app = express();
@@ -47,6 +48,7 @@ app.configure('development', function(){
 var routes = require('./routes')(Casualist);
 
 app.get('/', routes.root);
+app.post('/images', routes.images.create);
 app.get('/users/:id', routes.users.show);
 app.put('/users/:id', routes.users.update);
 app.get('/sessions', routes.sessions.check);

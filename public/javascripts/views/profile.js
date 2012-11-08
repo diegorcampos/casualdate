@@ -1,18 +1,22 @@
 define([
-  'jquery',
-  'underscore',
-  'backbone',
-  'bus',
-  'models/session',
-  'models/user',
-  'text!templates/profile.html',
-  'text!templates/profile/user.html',
-  'jquery_serialize'
-], function ($, _, Backbone, Bus, Session, UserModel, profileTemplate, profileUserTemplate) {
+       'jquery',
+       'underscore',
+       'backbone',
+       'bus',
+       'models/session',
+       'models/user',
+       'models/image',
+       'text!templates/profile.html',
+       'text!templates/profile/user.html',
+       'jquery_serialize'
+], function ($, _, Backbone, Bus, Session, UserModel, ImageModel, profileTemplate, profileUserTemplate) {
   var profileView = Backbone.View.extend({
     el: $('.content'),
     events: {
       'submit .profile-form': 'updateUser',
+      'dragover .image-upload': 'imageUpload',
+      'drop .image-upload': 'imageUpload',
+      'click .image-upload-post': 'imageUploadPost'
     },
     initialize: function() {
       this.user = new UserModel({id: Session.get('user').id});
@@ -45,8 +49,37 @@ define([
         }
       });
       return false;
+    },
+    imageUpload: function (event) {
+      var that = this;
+      event.stopPropagation();
+      event.preventDefault();
+      var e = event.originalEvent;
+      e.dataTransfer.dropEffect = 'copy';
+      this.pictureFile = e.dataTransfer.files[0];
+
+      var readerData = new FileReader();
+      readerData.onloadend = function () {
+        $('.image-upload').attr('src', readerData.result);
+        that.imageData = readerData.result;
+      };
+      readerData.readAsDataURL(this.pictureFile);
+      return false;
+    },
+    imageUploadPost: function() {
+      var user_id = this.user.id;
+      var image = new ImageModel({user_id: user_id, data: this.imageData});
+      image.save({}, {
+        success: function (model, response, options) {
+          console.log("Success saving image");
+        },
+        error: function (model, xhr, options) {
+          console.log("Error saving image");
+        }
+      });
     }
   });
+
   return new profileView;
 });
 
