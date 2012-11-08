@@ -55,7 +55,6 @@ define([
   var initialize = function(){
     var app_router = new AppRouter;
     Backbone.router = app_router;
-    console.log("History start: " + Backbone.history.start());
   };
   Bus.on("setTitle", function (title) {
     $("title").html("Casualist - " + title);

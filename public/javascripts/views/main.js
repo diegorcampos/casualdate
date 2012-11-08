@@ -15,7 +15,6 @@ define([
       });
     },
     initialize: function() {
-      console.log("MAIN VIEW INITIALIZED");
       Bus.on('validSessionAuth', this.render, this);
     }
   });
