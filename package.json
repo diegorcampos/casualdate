@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "connect-mongo": "*",
     "ejs": "*",
     "express": "3.0.x",
+    "nstore": "*",
     "passport": "0.1.x",
     "passport-local": "0.1.x",
     "sequelize": "*",

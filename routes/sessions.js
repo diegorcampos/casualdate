@@ -1,13 +1,13 @@
 module.exports = function(Casualist) {
-  var LocalStrategy = require('passport-local').Strategy;
   var passport = require('passport');
+  var LocalStrategy = require('passport-local').Strategy;
 
   passport.use(new LocalStrategy({
     usernameField: 'nickname',
     passwordField: 'password'
   },
   function(nickname, password, done) {
-    Casualist.Models.User.find({where: {nickname: nickname, password: password}}).success(function(user) {
+    Casualist.Models.User.find({where: ["nickname like ? and password = ?", nickname, password]}).success(function(user) {
       if (user) {
         return done(null, user);
       } else {
@@ -17,7 +17,7 @@ module.exports = function(Casualist) {
   }));
 
   passport.serializeUser(function(user, done) {
-    done(null, user._id);
+    done(null, user.id);
   });
   passport.deserializeUser(function(id, done) {
     Casualist.Models.User.find(id).success(function(user) {
@@ -26,6 +26,13 @@ module.exports = function(Casualist) {
   });
 
   return {
+    check: function(req, res, next) {
+      if (req.isAuthenticated()) {
+        return res.send({user: req.user});
+      } else {
+        return res.send({user: false});
+      }
+    },
     create: function(req, res, next) {
       passport.authenticate('local', function(err, user, info) {
         if (err || !user) {
@@ -38,7 +45,7 @@ module.exports = function(Casualist) {
     },
     destroy: function(req, res) {
       req.logOut();
-      res.redirect('/');
+      return res.send({user: false});
     }
   }
 }

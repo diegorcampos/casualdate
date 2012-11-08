@@ -10,14 +10,17 @@ define([
   var initialize = function() {
     Session.initialize({
       setUp: function(model) {
+        console.log("setUp");
         Bus.trigger('validSessionAuth');
       },
       tearDown: function() {
+        console.log("tearDown");
         Bus.trigger('invalidSessionAuth');
       }
     });
-
-    Router.initialize();
+    Session.check(function () {
+      Router.initialize();
+    });
   }
 
   return {

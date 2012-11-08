@@ -22,7 +22,7 @@ define([
       Session.login(creds, function (data) {
         if (data.user) {
           $('.login-form').fadeOut(200, function () {
-            Backbone.router.navigate('#/activity', true);
+            Backbone.router.navigate('#/activity', {trigger: true});
           });
         } else {
           $('.login-errors', that.el).hide().html(_.template(loginErrorsTemplate, {message: 'The email/password wasn\'t recognized'})).slideDown(200);

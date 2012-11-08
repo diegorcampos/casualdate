@@ -18,11 +18,15 @@ define([
         ajaxOptions.dataType = 'json';
 
         ajaxOptions.success = function (data) {
+          console.log("AJAX");
+          console.log(data);
           if (typeof data.user !== 'undefined') {
             if (data.user !== false) {
+              console.log("GOOD");
               model.set(data);
               options.setUp(model);
             } else {
+              console.log("BAD");
               options.tearDown();
               model.set({user: false});
               model.id = null;
@@ -62,7 +66,7 @@ define([
       });
     },
     checkAuth: function () {
-      return this.get('auth');
+      return this.get('user');
     }
   });
   return new SessionModel();

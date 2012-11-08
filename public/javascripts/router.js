@@ -7,13 +7,15 @@ define([
 ], function($, _, Backbone, Bus, Session) {
   var AppRouter = Backbone.Router.extend({
     routes: {
-      '/login': 'login',
-      '/activity': 'activity',
-      '/explore': 'explore',
-      '/profile': 'profile',
+      'login': 'login',
+      'logout': 'logout',
+
+      'activity': 'activity',
+      'explore': 'explore',
+      'profile': 'profile',
 
       // Default
-      '*actions': 'login'
+      '*default': 'default'
     },
     login: function () {
       console.log("LOGIN");
@@ -27,11 +29,26 @@ define([
         }
       });
     },
+    logout: function() {
+      var that = this;
+      Session.logout(function() {
+        window.location = '#';
+      });
+    },
     activity: function() {
       console.log("ACTIVITY");
+      Bus.trigger('setTitle', "Activity");
       require(['views/activity'], function (activityView) {
         activityView.render();
       });
+    },
+    default: function() {
+      console.log("DEFAULT");
+      if (Session.checkAuth()) {
+        this.activity();
+      } else {
+        this.login();
+      }
     }
   });
 
