@@ -28,24 +28,24 @@ module.exports = function(Casualist) {
   return {
     check: function(req, res, next) {
       if (req.isAuthenticated()) {
-        return res.send({user: req.user});
+        return res.send({auth: true, user: req.user});
       } else {
-        return res.send({user: false});
+        return res.send({auth: false, user: false});
       }
     },
     create: function(req, res, next) {
       passport.authenticate('local', function(err, user, info) {
         if (err || !user) {
-          return res.send({user: user});
+          return res.send({auth: false, user: user});
         }
         req.logIn(user, function(err) {
-          return res.send({user: user});
+          return res.send({auth: true, user: user});
         });
       })(req, res, next);
     },
     destroy: function(req, res) {
       req.logOut();
-      return res.send({user: false});
+      return res.send({auth: false, user: false});
     }
   }
 }

@@ -1,0 +1,35 @@
+<form class="form-horizontal profile-form">
+  <div class="control-group">
+    <label class="control-label" for="controls">I am a</label>
+    <div class="controls">
+      <label class="radio">
+        <input type="radio" name="gender" value="female" <%= user.gender == "female" ? "checked" : "" %>>
+        Girl
+      </label>
+      <label class="radio">
+        <input type="radio" name="gender" value="male" <%= user.gender == "male" ? "checked" : "" %>>
+        Guy
+      </label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="controls">Looking for a</label>
+    <div class="controls">
+      <label class="radio">
+        <input type="radio" name="gender_target" value="female" <%= user.gender_target == "female" ? "checked" : "" %>>
+        Girl
+      </label>
+      <label class="radio">
+        <input type="radio" name="gender_target" value="male" <%= user.gender_target == "male" ? "checked" : "" %>>
+        Guy
+      </label>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn btn-inverse">Save</button>
+    </div>
+  </div>
+</form>
+
+

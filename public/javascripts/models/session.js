@@ -11,23 +11,24 @@ define([
     },
     initialize: function (options) {
       var model = this;
-      model.set({user: false});
+      model.set({auth: false});
+      var auth = this.get('auth');
       options = _.extend({}, this.defaults, options);
       $.ajaxPrefilter(function (ajaxOptions) {
         var success = ajaxOptions.success;
         ajaxOptions.dataType = 'json';
 
         ajaxOptions.success = function (data) {
-          if (typeof data.user !== 'undefined') {
-            if (data.user !== false) {
-              model.set(data);
-              options.setUp(model);
-            } else {
+          if (typeof data.auth !== 'undefined') {
+            if (data.auth == false) {
               options.tearDown();
-              model.set({user: false});
+              model.set({auth: false});
               model.id = null;
               model.clear();
               $.ajaxSetup({});
+            } else if (data.auth == true && auth == false) {
+              model.set(data);
+              options.setUp(model);
             }
           }
 
@@ -62,7 +63,7 @@ define([
       });
     },
     checkAuth: function () {
-      return this.get('user');
+      return this.get('auth');
     }
   });
   return new SessionModel();

@@ -47,7 +47,8 @@ app.configure('development', function(){
 var routes = require('./routes')(Casualist);
 
 app.get('/', routes.root);
-app.get('/users', routes.users.list);
+app.get('/users/:id', routes.users.show);
+app.put('/users/:id', routes.users.update);
 app.get('/sessions', routes.sessions.check);
 app.post('/sessions', routes.sessions.create);
 app.delete('/sessions', routes.sessions.destroy);

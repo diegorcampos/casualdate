@@ -4,7 +4,7 @@ module.exports = function(Casualist) {
       res.render('index');
     },
     sessions: require('./routes/sessions')(Casualist),
-    users: require('./routes/users')
+    users: require('./routes/users')(Casualist)
   }
 }
 

@@ -6,8 +6,6 @@ exports.User = function(sequelize) {
     nickname: Sequelize.STRING,
     gender: Sequelize.STRING,
     gender_target: Sequelize.STRING,
-    dob: Sequelize.DATE,
-    deletedAt: Sequelize.DATE
   });
   User.sync();
   return User;
