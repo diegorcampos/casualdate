@@ -38,14 +38,18 @@ define([
       });
     },
     activity: function() {
-      console.log("ACTIVITY");
       Bus.trigger('setTitle', "Activity");
       require(['views/activity'], function (activityView) {
         activityView.render();
       });
     },
+    explore: function() {
+      Bus.trigger('setTitle', "Explore");
+      require(['views/explore'], function (exploreView) {
+        exploreView.render();
+      });
+    },
     profile: function() {
-      console.log("PROFILE");
       Bus.trigger('setTitle', "Profile");
       require(['views/profile'], function (profileView) {
         profileView.render();

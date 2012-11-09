@@ -49,6 +49,7 @@ var routes = require('./routes')(Casualist);
 
 app.get('/', routes.root);
 app.post('/images', routes.images.create);
+app.get('/images', routes.images.index);
 app.get('/users/:id', routes.users.show);
 app.put('/users/:id', routes.users.update);
 app.get('/sessions', routes.sessions.check);
