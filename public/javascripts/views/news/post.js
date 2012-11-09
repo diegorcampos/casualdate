@@ -23,8 +23,6 @@ define([
     save: function() {
       this.model.set('title', this.$el.find('.post-title').html());
       this.model.set('text', this.$el.find('.post-text').html());
-      console.log(this.model.title);
-      console.log(this.model.text);
       this.model.save({}, {
         success: function() {
           alert("Saved");
