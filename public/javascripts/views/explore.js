@@ -3,10 +3,10 @@ define([
   'underscore',
   'backbone',
   'models/session',
-  'collections/images',
+  'collections/users',
   'text!templates/explore.html',
-  'text!templates/explore/image.html'
-], function ($, _, Backbone, Session, ImagesCollection, exploreTemplate, exploreImageTemplate) {
+  'text!templates/explore/user.html'
+], function ($, _, Backbone, Session, UsersCollection, exploreTemplate, exploreUserTemplate) {
   var exploreView = Backbone.View.extend({
     el: $('.content'),
     render: function () {
@@ -14,11 +14,11 @@ define([
       $('.navigation li').removeClass("active");
       $('.navigation li.explore').addClass("active");
 
-      this.collection = new ImagesCollection();
+      this.collection = new UsersCollection();
       this.collection.fetch({
         success: function (collection) {
           collection.each(function(item) {
-            $('.explore-images').append(_.template(exploreImageTemplate, {image: item}));
+            $('.explore-images').append(_.template(exploreUserTemplate, {model: item}));
           }, this);
         }
       });

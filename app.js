@@ -12,11 +12,13 @@ var sequelize = new Sequelize('casualist', 'casualist', 'teap0tting', {
 })
 
 var Casualist = {};
+Casualist.Libs = {};
+Casualist.Sequelize = Sequelize;
 Casualist.Models = {};
 Casualist.Models.Image = require('./models/image').Image(sequelize);
 Casualist.Models.Post = require('./models/post').Post(sequelize);
 Casualist.Models.User = require('./models/user').User(sequelize);
-Casualist.Models.User.hasMany(Casualist.Models.Image, { foreignKey: 'user_id' });
+Casualist.Models.User.hasMany(Casualist.Models.Image, { foreignKey: 'user_id', as: 'Images' });
 Casualist.Models.User.sync();
 
 var app = express();
@@ -60,6 +62,7 @@ app.get('/posts', routes.posts.index);
 app.post('/posts', routes.posts.create);
 app.put('/posts/:id', routes.posts.update);
 
+app.get('/users', routes.users.index);
 app.get('/users/:id', routes.users.show);
 app.put('/users/:id', routes.users.update);
 app.get('/users/:id/images', routes.users.images.index);
