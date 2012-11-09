@@ -10,7 +10,7 @@ define([
       'login': 'login',
       'logout': 'logout',
 
-      'activity': 'activity',
+      'news': 'news',
       'explore': 'explore',
       'profile': 'profile',
 
@@ -37,10 +37,10 @@ define([
         });
       });
     },
-    activity: function() {
-      Bus.trigger('setTitle', "Activity");
-      require(['views/activity'], function (activityView) {
-        activityView.render();
+    news: function() {
+      Bus.trigger('setTitle', "News");
+      require(['views/news'], function (newsView) {
+        newsView.render();
       });
     },
     explore: function() {
@@ -58,7 +58,7 @@ define([
     default: function() {
       console.log("DEFAULT");
       if (Session.checkAuth()) {
-        this.activity();
+        this.news();
       } else {
         this.login();
       }

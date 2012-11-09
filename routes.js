@@ -4,6 +4,7 @@ module.exports = function(Casualist) {
       res.render('index');
     },
     images: require('./routes/images')(Casualist),
+    posts: require('./routes/posts')(Casualist),
     sessions: require('./routes/sessions')(Casualist),
     users: require('./routes/users')(Casualist)
   }

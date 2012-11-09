@@ -14,6 +14,7 @@ var sequelize = new Sequelize('casualist', 'casualist', 'teap0tting', {
 var Casualist = {};
 Casualist.Models = {};
 Casualist.Models.Image = require('./models/image').Image(sequelize);
+Casualist.Models.Post = require('./models/post').Post(sequelize);
 Casualist.Models.User = require('./models/user').User(sequelize);
 Casualist.Models.User.hasMany(Casualist.Models.Image, { foreignKey: 'user_id' });
 Casualist.Models.User.sync();
@@ -50,12 +51,17 @@ app.configure('development', function(){
 var routes = require('./routes')(Casualist);
 
 app.get('/', routes.root);
+
 app.post('/images', routes.images.create);
 app.get('/images', routes.images.index);
 app.delete('/images/:id', routes.images.destroy);
+
+app.get('/posts', routes.posts.index);
+
 app.get('/users/:id', routes.users.show);
 app.put('/users/:id', routes.users.update);
 app.get('/users/:id/images', routes.users.images.index);
+
 app.get('/sessions', routes.sessions.check);
 app.post('/sessions', routes.sessions.create);
 app.delete('/sessions', routes.sessions.destroy);

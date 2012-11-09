@@ -10,8 +10,8 @@ define([
     el: $('body'),
     render: function () {
       this.$el.html(_.template(mainTemplate));
-      require(['views/activity'], function(activityView) {
-        activityView.render();
+      require(['views/news'], function(newsView) {
+        newsView.render();
       });
     },
     initialize: function() {
