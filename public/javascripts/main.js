@@ -1,5 +1,8 @@
 require.config({
   shim: {
+    'etch': {
+      exports: 'etch'
+    },
     'underscore': {
       exports: '_'
     },
@@ -12,7 +15,9 @@ require.config({
     }
   },
   paths: {
+    etch: 'libs/etch/etch',
     jquery: 'libs/jquery/jquery-min',
+    jquery_highlight: 'libs/jquery/jquery-highlight',
     jquery_serialize: 'libs/jquery/jquery-serialize',
     underscore: 'libs/underscore/underscore-min',
     backbone: 'libs/backbone/backbone-min',
