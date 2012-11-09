@@ -3,15 +3,17 @@ define([
   'underscore',
   'backbone',
   'models/session',
+  'models/post',
   'collections/posts',
   'views/news/post',
   'text!templates/news.html',
   'jquery_highlight'
-], function ($, _, Backbone, Session, PostsCollection, PostView, newsTemplate) {
+], function ($, _, Backbone, Session, PostModel, PostsCollection, PostView, newsTemplate) {
   var newsView = Backbone.View.extend({
     el: $('.content'),
     events: {
-      'click .edit-news-toggle': 'editNewsToggle'
+      'click .edit-news-toggle': 'editNewsToggle',
+      'click .edit-news-add': 'editNewsAdd'
     },
     initialize: function() {
       this.editable = false;
@@ -41,6 +43,10 @@ define([
       }
       $('*[data-editable]').highlight();
       this.editable = !this.editable;
+    },
+    editNewsAdd: function() {
+      var postView = new PostView({model: new PostModel});
+      $('.posts-list').prepend(postView.render().el);
     }
   });
   return new newsView;

@@ -1,5 +1,10 @@
 module.exports = function(Casualist) {
   return {
+    create: function(req, res, next) {
+      Casualist.Models.Post.create(req.body).complete(function(err, model) {
+        return res.send({err: err, post: model});
+      });
+    },
     index: function(req, res, next) {
       Casualist.Models.Post.findAll().done(function(err, models) {
         return res.send(models);

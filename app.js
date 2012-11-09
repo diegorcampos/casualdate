@@ -57,6 +57,7 @@ app.get('/images', routes.images.index);
 app.delete('/images/:id', routes.images.destroy);
 
 app.get('/posts', routes.posts.index);
+app.post('/posts', routes.posts.create);
 app.put('/posts/:id', routes.posts.update);
 
 app.get('/users/:id', routes.users.show);
