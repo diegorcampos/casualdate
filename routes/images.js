@@ -11,6 +11,13 @@ module.exports = function(Casualist) {
       Casualist.Models.Image.findAll().done(function(err, models) {
         return res.send(models);
       });
+    },
+    destroy: function(req, res, next) {
+      console.log("DESTROY");
+      var id = parseInt(req.params.id);
+      Casualist.Models.Image.destroyClean(id, function(err, data) {
+        return res.send({err: err, data: data});
+      });
     }
   }
 }

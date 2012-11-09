@@ -47,6 +47,27 @@ exports.Image = function(sequelize) {
             });
           }
         });
+      },
+      destroyClean: function(id, callback) {
+        var image = Image.find(id).complete(function(err, image) {
+          var matches = image.url.match(/^(.+?)\..+\/(.+)$/);
+          var bucketName = matches[1];
+          var objectName = matches[2];
+
+          console.log(bucketName);
+          console.log(objectName);
+
+          var params = {
+            BucketName    : bucketName,
+            ObjectName    : objectName,
+          };
+
+          s3.DeleteObject(params, function(err, data) {
+            image.destroy().complete(function(err, data) {
+              callback(err, data);
+            });
+          });
+        });
       }
     }});
     Image.sync();

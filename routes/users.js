@@ -13,7 +13,8 @@ module.exports = function(Casualist) {
           return res.send({user: user});
         });
       });
-    }
+    },
+    images: require('./users/images')(Casualist)
   }
 }
 

@@ -65,3 +65,18 @@ a {
   font-weight: bold;
   font-size: 13px;
 }
+.user-images div {
+  position: relative;
+  float: left;
+}
+.user-images div img {
+  width: 160px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+.user-images div span.delete {
+  position: absolute;
+  top: 1px;
+  right: 0px;
+  padding-right: 21px;
+}

@@ -6,10 +6,12 @@ define([
        'models/session',
        'models/user',
        'models/image',
+       'views/profile/image',
        'text!templates/profile.html',
        'text!templates/profile/user.html',
+       'text!templates/profile/images.html',
        'jquery_serialize'
-], function ($, _, Backbone, Bus, Session, UserModel, ImageModel, profileTemplate, profileUserTemplate) {
+], function ($, _, Backbone, Bus, Session, UserModel, ImageModel, ImageView, profileTemplate, profileUserTemplate, profileImagesTemplate) {
   var profileView = Backbone.View.extend({
     el: $('.content'),
     events: {
@@ -32,6 +34,18 @@ define([
         success: function (model) {
           var user = model.get("user");
           $('.user-form').html(_.template(profileUserTemplate, {user: user}));
+        }
+      });
+
+      this.user.images.fetch({
+        success: function (collection) {
+          that.profileImages = collection;
+          that.bind("remove", that.removeOne);
+          $('.user-images').html(_.template(profileImagesTemplate));
+          collection.each(function(item) {
+            var imageView = new ImageView({model: item});
+            $('.user-images-list').append(imageView.render().el);
+          });
         }
       });
     },
@@ -77,6 +91,10 @@ define([
           console.log("Error saving image");
         }
       });
+    },
+    removeOne: function(profileImage) {
+      console.log("REMOVE ONE");
+      console.log(profileImage);
     }
   });
 
